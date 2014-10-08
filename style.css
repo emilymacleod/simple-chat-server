@@ -73,6 +73,7 @@ input {
 #name {
 	background-color: #ffffff;
 	color: black;
-	width: 100%;
-	margin-left: 14px;
+	width: 500px;
+	margin-left: 25%;
+	margin-top: 35px;
 }
