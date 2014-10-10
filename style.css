@@ -45,6 +45,7 @@ input {
 
 #TextArea {
 	border: 5px red;
+	border-radius: 25px;
 	width: 500px;
 	height: 450px;
 	margin-left: 25%;
