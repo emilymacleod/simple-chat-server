@@ -12,11 +12,6 @@ app.use("/style.css", express.static(__dirname + '/style.css'));
 
 app.use("/script.js", express.static(__dirname + '/script.js'));
 
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-});
-
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
