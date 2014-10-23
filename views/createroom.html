@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>New chat interface</title>
+  </head>
+
+ <div id="Header">
+      <p>Chat UI - DEMO DAY!
+
+        
+    </div>
+    
+    <div id="Chatheader">
+        
+    </div>
+
+    <div id="TextArea" style="overflow-y: auto">
+    <!-- messages to go here -->  
+    </div>
+
+   
+
+<!-- user information goes here -->
+<div id="name">
+    <!-- enter name button here -->
+    <button onclick="enterName()">Enter name</button>
+
+    </div>
+    <div id="inputArea">
+     <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   
+
+<script type="text/javascript" src="/script.js"></script>
+
+</script>
+<div id="activeEmbed"></div>
+<input type="text" value="" id="embedInput"></input>
+<input type="button" onclick="addEmbed()"></input>
+</div>
+
+  </body>
+</html>
