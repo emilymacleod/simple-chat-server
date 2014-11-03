@@ -28,10 +28,6 @@ app.use("/style.css", express.static(__dirname + '/style.css'));
 
 app.use("/script.js", express.static(__dirname + '/script.js'));
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
-
 client.on("error", function (err) {
   console.log("Error " + err);
 });
@@ -41,7 +37,11 @@ client.set("app name", "simple chat", redis.print);
 io.on('connection', function(socket){
   userCount= userCount+1;
  console.log('a user connected','there are now',userCount,"users online");
-
+  socket.on('person', function(msg){
+    console.log('person: ' + msg);
+    socket.broadcast.emit('person', msg);
+    
+  });
 
  client.get('app name', function(err, reply) {
     if(err) {console.log(err)};
@@ -49,12 +49,16 @@ io.on('connection', function(socket){
   });
   //redis gets array named history
   client.hgetall('history', function(err, replies) {
-    if(err){console.log(err) }; 
+    if(err){console.log(err); return err; }; 
     socket.emit('gotHistory', replies);
   });
 
   socket.on('sentMessage', function(msg){
       console.log("message received",msg);
+      client.incr('msg_id', function(err, msg_id) {
+        console.log(msg_id,":",msg);
+        client.hset('history', msg_id, msg,redis.print);
+    });
       io.emit('gotMessage', msg);
   });
 
@@ -64,11 +68,6 @@ io.on('connection', function(socket){
   });
 });
 
- /*socket.on('talk', function(msg){
-    console.log('talk: ' + msg);
-    socket.broadcast.emit('talk', msg);
-    client.incr('msg_id', function(err, msg_id) {
-      console.log('msg_id', msg_id);
-      client.hset('history', msg_id, msg);
-    });
-  });*/
+http.listen(3008, function(){
+  console.log('listening on *:3008');
+});

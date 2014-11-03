@@ -1,4 +1,5 @@
 var person = "";
+var socket = io.connect('http://localhost:3008');
 
  function enterName() {
      person = prompt("Please enter your name ", "");
@@ -40,10 +41,12 @@ var socket = io();
 
 
 socket.on('gotHistory', function(replies){
-  console.log('history is',replies)
+  console.log('replies is',replies)
   for (var i in replies) {
+    console.log(i);
       var msg = replies[i];
-      $('#TextArea').innerHTML=$('<div>').text(msg);
+      console.log(msg);
+      $('#TextArea').append($('<div>').text(msg));
     };
 })
 
