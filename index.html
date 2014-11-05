@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+  <head>
+
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
+
+    <title>New chat interface</title>
+      <style>
+          body {
+              background-image: url("http://coolblackppt.com/wp-content/uploads/2014/01/The-hermit-design-free-seamless-tile-able-backgrounds.png");
+          }
+
+          h1 {
+              color: white;
+              margin-left: 14px;
+              text-align: center;
+              font-family: Verdana;
+          }
+
+          h2 {
+              color: white;
+              margin-left: 14px;
+              text-align: center;
+              font-family: Verdana;
+          }
+
+          input {
+              margin: 25px;
+              width: 400px;
+          }
+
+          #Header {
+              background-color: #D3D3D3;
+              width: 100%;
+              height: 35px;
+              color: red;
+              margin-left: 14px;
+              text-align: center;
+              font-family: Verdana;
+              font-size: 24px;
+              padding-bottom: 2px;
+          }
+
+          #nav {
+              line-height:20px;
+              background-color:#eeeeee;
+              height:100px;
+              width:100px;
+              float:left;
+              padding:5px;
+              margin-left: 14px;
+          }
+
+          #TextArea {
+              border: 5px red;
+              border-radius: 25px;
+              width: 500px;
+              height: 450px;
+              margin-left: 25%;
+              margin-top: 35px;
+              background-color: white;
+              overflow: scroll;
+          }
+
+          #Chatheader {
+              border: 20px red;
+              width: 100%;
+              height: 40px;
+              margin-left: 14px;
+              font-family: verdana;
+              font-size: 24px;
+              text-align: center;
+              background-color: gray;
+          }
+
+          #users {
+              width: 22%;
+              background-color: #99ffff;
+              height: 80%;
+              margin-top: 8%;
+              margin-right: 8%;
+              float: right;
+              color: black;
+              font-family: Trebuchet MS;
+          }
+
+          #inputArea {
+              margin-left: 25%;
+              margin-top: 35px;
+              width: 100px;
+              padding-bottom: 25px;
+
+          }
+
+          #activeEmbed {
+              margin-left: 25%;
+              margin-top: 100px;
+              width: 500px;
+              padding-bottom: 25px;
+          }
+
+          #name {
+              background-color: #ffffff;
+              color: black;
+              width: 500px;
+              margin-left: 25%;
+              margin-top: 35px;
+          }
+
+          #rooms {
+              float: right;
+              width: 800px;
+              border-right: 1px solid black;
+              height: 300px;
+              padding: 10px;
+              overflow:scroll-y;
+              z-index: 2;
+          }
+
+          #m {
+              background-color: ffffff;
+              color: black;
+              width: 400px;
+              margin-left: 25%;
+              margin-top: 35px;
+
+           #send {
+               background-color: ffffff;
+               color: black;
+               width: 100em;
+               height: 100em;
+               margin-left: 25%;
+               margin-top: 35px;
+           }
+          }
+      </style>
+  </head>
+  <body>
+
+ <div id="Header">
+      <p>Chat UI - DEMO DAY!
+
+        
+    </div>
+    
+    <div id="Chatheader">
+        
+    </div>
+
+    <!-- nav bar goes here-->
+    <div id="nav">
+      <a href="http://www.maggiestcloud.com">Home</a><br>
+      <a href="http://www.twitter.com/emilymacleod86">Twitter</a><br>
+      <a href="http://www.uitstartup.org">UIT</a><br>
+    </div>
+
+    <div id="TextArea" style="overflow-y: auto">
+    <!-- messages to go here -->  
+    </div>
+
+   
+
+    <!-- user information goes here -->
+    <div id="name">
+    <!-- enter name button here -->
+        <button onclick="enterName()">Enter name</button>
+
+    </div>
+
+    <div id="inputArea">
+        <label for="m">Message:</label><input id="m" type="text">
+        <input type="button" value="send" id="send" onclick="sendMsg()" style="height:50px; width:50px">
+    </div>
+
+
+    <div id="activeEmbed">
+        <label for="embedInput">Embed:</label><input type="text" value="" id="embedInput">
+        <input type="button" onclick="addEmbed()" style="height:50px; width:50px">
+    </div>
+
+      <script src="/socket.io/socket.io.js"></script><!--this file is generated through sorcery-->
+      <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+      <script type="text/javascript" src="/script.js"></script>
+  </body>
+</html>
