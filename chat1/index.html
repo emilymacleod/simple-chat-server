@@ -17,6 +17,13 @@
         
     </div>
 
+    <!-- nav bar goes here-->
+    <div id="nav">
+      <a href="http://www.maggiestcloud.com">Home</a><br>
+      <a href="http://www.twitter.com/emilymacleod86">Twitter</a><br>
+      <a href="http://www.uitstartup.org">UIT</a><br>
+    </div>
+
     <div id="TextArea" style="overflow-y: auto">
     <!-- messages to go here -->  
     </div>
@@ -31,7 +38,7 @@
     </div>
     <div id="inputArea">
      <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" /><input type="button" value="send" id="send">Send</input>
     </form>
     
     <script src="/socket.io/socket.io.js"></script>
@@ -40,9 +47,37 @@
 
 <script type="text/javascript" src="/script.js"></script>
 
+<script>
+
+  var socket = io('/chat1');
+
+
+  $('#person').click(function(){
+    socket.emit('person', $('#newMsg').val());
+
+    var msg = $('#newMsg').val();
+    $('#msgs').append($('<div>').text(msg));
+
+    $('#newMsg').val(''); // clear the input field
+
+    return false;
+  });
+
+socket.on('person', function(msg){
+    $('#msgs').append($('<div>').text(msg));
+  });
+
+  socket.on('gotHistory', function(replies){
+    for (var i in replies) {
+      var msg = replies[i];
+      $('#msgs').append($('<div>').text(msg));
+    };
+
 </script>
+
 <div id="activeEmbed"></div>
 <input type="text" value="" id="embedInput"></input>
+
 <input type="button" onclick="addEmbed()"></input>
 </div>
 

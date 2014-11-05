@@ -7,9 +7,10 @@ var redis = require("redis");
   client = redis.createClient();
 var userCount=0;
 var usernames = {};
+var chat1 = io.of('/chat1');
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html')
+  res.sendFile(__dirname + '/views/index.html')
 });
 
 app.get('/home', function(req, res){
@@ -36,7 +37,7 @@ client.set("app name", "simple chat", redis.print);
 
 io.on('connection', function(socket){
   userCount= userCount+1;
- console.log('a user connected','there are now',userCount,"users online");
+ console.log('a user connected','there are now',userCount,"users online", redis.print);
   socket.on('person', function(msg){
     console.log('person: ' + msg);
     socket.broadcast.emit('person', msg);
@@ -68,6 +69,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3008, function(){
-  console.log('listening on *:3008');
+http.listen(3000, function(){
+  console.log('listening on *:3000');
 });
