@@ -18,6 +18,12 @@ var socket = io.connect('http://localhost:3008');
   msgs.appendChild(content);
 }*/
 
+var room = io.connect('/room');
+$(".roomButton").click(function(){
+    var roomname = $(this).val();
+    socket.emit("switchrooms",roomname);
+})
+
 $('#person').click(function(){
     socket.emit('person', $('#newMsg').val());
     var msg = $('#newMsg').val();
@@ -53,6 +59,7 @@ function addEmbed() {
 }
 
 socket.on('gotHistory', function(replies){
+    $('#TextArea').html(' ');
   console.log('replies is',replies);
   for (var i in replies) {
     console.log(i);
@@ -71,5 +78,6 @@ socket.on('gotHistory', function(replies){
   };
 
   socket.on('gotMessage', function(msg){
+      $('#TextArea').html(' ');
     $('#TextArea').append($('<p>').text(msg));
   });

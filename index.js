@@ -5,8 +5,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis = require("redis");
   client = redis.createClient();
-var userCount=0;
-var usernames = {};
+
+var userCount = 0;
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html')
@@ -35,12 +35,14 @@ client.on("error", function (err) {
 client.set("app name", "simple chat", redis.print);
 
 io.on('connection', function(socket){
-  userCount= userCount+1;
- console.log('a user connected','there are now',userCount,"users online");
+    var room =  ' ';
+    socket.join(room);
+    userCount = userCount+1;
+    console.log('a user connected','there are now ' + userCount + " users online");
   socket.on('person', function(msg){
+
     console.log('person: ' + msg);
     socket.broadcast.emit('person', msg);
-    
   });
 
  client.get('app name', function(err, reply) {
@@ -48,7 +50,7 @@ io.on('connection', function(socket){
     console.log('app name is', reply);
   });
   //redis gets array named history
-  client.hgetall('history', function(err, replies) {
+  client.hgetall('history'+room, function(err, replies) {
     if(err){console.log(err); return err; }; 
     socket.emit('gotHistory', replies);
   });
@@ -57,10 +59,20 @@ io.on('connection', function(socket){
       console.log("message received",msg);
       client.incr('msg_id', function(err, msg_id) {
         console.log(msg_id,":",msg);
-        client.hset('history', msg_id, msg,redis.print);
+        client.hset('history'+room, msg_id, msg,redis.print);
     });
-      io.emit('gotMessage', msg);
+      io.to(room).emit('gotMessage', msg);
   });
+
+    socket.on('switchrooms', function(newroom){
+        socket.leave(room);
+        socket.join(newroom);
+        room = newroom;
+        client.hgetall('history'+ room, function(err, replies) {
+            if(err){console.log(err); return err; };
+            socket.emit('gotHistory', replies);
+        });
+    });
 
   socket.on('disconnect', function(){
     userCount = userCount-1;
